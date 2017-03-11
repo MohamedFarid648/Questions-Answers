@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title </title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Questions&Answers", "", "", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+           
+                    <ul class="nav navbar-nav">
+                            @if (Session["UserSessionEmail"] != null)
+                           {
+                                    <li>@Html.ActionLink("Ask?", "Index", "Questions")</li>
+                                    <li>@Html.ActionLink("Contact Us", "ContactUs", "Users")</li>
+
+                            }
+                            else
+                            {
+                                <li>@Html.ActionLink("Contact Us", "ContactUs", "Users")</li>
+
+                            }
+                    </ul>
+                <ul class="nav navbar-nav navbar-right">
+
+                    @if (null==Session["UserSessionEmail"]  )
+                    {
+                      
+                            <li>@Html.ActionLink("Register", "Register", "Users")</li>
+                            <li>@Html.ActionLink("Log in", "Login", "Users")</li>
+
+                    }
+                    else
+                    { 
+                        <li>@Html.ActionLink("Welcome " + Session["UserSessionEmail"].ToString(), "Index", "Users")</li>
+                        <li>@Html.ActionLink("Logout", "Logout", "Users")</li>
+                    }
+                </ul>
+
+
+
+        </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Questions&Answers</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

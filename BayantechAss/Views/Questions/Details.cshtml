@@ -1,0 +1,53 @@
+﻿@using BayantechAss.Models;
+@model BayantechAss.Models.Question
+
+@{
+    ViewBag.Title = "Details";
+    DBContextClass db = new DBContextClass();
+    List<Answer> answers = db.Answers.Where(a => a.QuestionID == Model.id).ToList();
+    Answer answer = new Answer();
+    answer.QuestionID = Model.id;
+}
+<script src="~/scripts/jquery-1.10.2.min.js"></script>
+<script src="~/scripts/jquery.unobtrusive-ajax.min.js"></script>
+<h2>Details</h2>
+
+<div>
+    <h4>Question</h4>
+    <hr />
+<div>
+    <h2>@Model.text</h2>
+</div>
+
+    <div id="DisplayAnswers"> 
+    @Html.Partial("ReturnAnswers", answers)
+        </div>
+    <div id="postAnswerForm">
+       
+
+        @using (Ajax.BeginForm("AddAnswer", "Questions", new AjaxOptions
+        {
+            HttpMethod = "POST",
+            UpdateTargetId = "DisplayAnswers",
+            InsertionMode = InsertionMode.InsertAfter,
+            LoadingElementId = "WaitingImage"
+
+        }))
+        {
+            @Html.Hidden("QuestionID", Model.id)
+            <h2>Text:</h2>@Html.TextArea("Text","Write An Answer.. ")
+            <br />
+            <input type="submit" value="Answer" class="btn btn-default" />
+        }
+
+        <div id="WaitingImage" style="display:none">
+            Loading...<img src="~/Photos/spiffygif_30x30.gif" />
+        </div>
+
+
+    </div>
+
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

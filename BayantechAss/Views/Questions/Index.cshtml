@@ -1,0 +1,69 @@
+﻿@using BayantechAss.Models;
+@model IEnumerable<BayantechAss.Models.Question>
+@{
+    ViewBag.Title = "Index";
+
+}
+<script src="~/scripts/jquery-1.10.2.min.js"></script>
+<script src="~/scripts/jquery.unobtrusive-ajax.min.js"></script>
+<h2>Questions:</h2>
+
+
+<div id="DisplayQuestions">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.text)
+            </th>
+            <th>
+                @Html.DisplayName("User Email")
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.text)
+                </td>
+                <td>
+                    @BayantechAss.Models.User.returnUserEmail(item.UserID)
+                </td>
+                <td>
+                    @if (Session["UserSessionEmail"].ToString() == BayantechAss.Models.User.returnUserEmail(item.UserID))
+                    {
+                        @Html.ActionLink("Edit", "Edit", new { id = item.id })@:|
+                        @Html.ActionLink("Delete", "Delete", new { id = item.id })@:|
+                        @Html.ActionLink("Details", "Details", new { id = item.id })
+
+                        @*Note:if you add | after edit or delete here there will be an error,you should add @: before | *@
+                    }
+
+                    else
+                    {
+                        @Html.ActionLink("Details", "Details", new { id = item.id })
+
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+@using(Ajax.BeginForm("AddQuestion", "Questions", new AjaxOptions {
+    HttpMethod = "POST",
+    UpdateTargetId = "DisplayQuestions",
+    InsertionMode = InsertionMode.InsertAfter,
+    LoadingElementId = "WaitingImage"
+
+}))
+{ 
+
+<h2>Text:</h2>@Html.TextArea("Text")
+    <br />
+<input type="submit" value="Ask"  class="btn btn-default"  />
+}
+
+<div id="WaitingImage" style="display:none">
+    Loading...<img src="~/Photos/spiffygif_30x30.gif"/>
+</div>
