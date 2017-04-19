@@ -1,0 +1,30 @@
+﻿@model QuestionsAndAnswers.Models.Question
+<p>
+</p>
+ <table class="table">
+     <tr>
+         <td>
+             @Model.text
+         </td>
+         <td style="margin-left:40px;">
+             @QuestionsAndAnswers.Models.User.returnUserEmail(Model.UserID)
+         </td>
+         <td>
+         
+                 @Html.ActionLink("Edit", "Edit", new { id = Model.id })
+            
+             |
+             
+                 @Html.ActionLink("Delete", "Delete", new { id = Model.id })
+
+             |
+             
+                 @Html.ActionLink("Details", "Details", new { id = Model.id })
+
+         </td>
+
+     </tr>
+ </table>
+   
+
+

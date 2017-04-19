@@ -1,0 +1,18 @@
+﻿@model QuestionsAndAnswers.Models.Answer
+<p>
+</p>
+<table class="table">
+    <tr>
+        <td>
+            @Model.text
+        </td>
+        <td style="margin-left:35px;">
+            @QuestionsAndAnswers.Models.User.returnUserEmail(Model.UserID)
+        </td>
+
+
+    </tr>
+</table>
+
+
+
