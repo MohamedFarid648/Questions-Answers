@@ -23,6 +23,11 @@ namespace QuestionsAndAnswers.Controllers
             {
                 string user_email = Session["UserSessionEmail"].ToString();
                 user = db.Users.Single(u => u.Email == user_email);
+                /*
+                 You use the Single method on a collection when you know the collection 
+                 will have only one item. 
+                 The Single method throws an exception if the collection passed to it is empty or if there's more than one item
+                 */
                 return View(user);
             }
             else {

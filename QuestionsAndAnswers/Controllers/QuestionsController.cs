@@ -39,11 +39,16 @@ namespace QuestionsAndAnswers.Controllers
                 string email = Session["UserSessionEmail"].ToString();
                 int UserID= QuestionsAndAnswers.Models.User.returnUserID(email);
                 string text = Request.Form.Get("Text");
-                question.UserID = UserID;
-                question.text = text;
-                db.Questions.Add(question);
-                db.SaveChanges();
-                return PartialView("ViewQuestionUsingAjax", question);
+                if (!string.IsNullOrEmpty(text) && !string.IsNullOrWhiteSpace(text))
+                {
+                    question.UserID = UserID;
+                    question.text = text;
+                    db.Questions.Add(question);
+                    db.SaveChanges();
+                    return PartialView("ViewQuestionUsingAjax", question);
+                }
+                else { return PartialView("ViewQuestionUsingAjax", question); }
+
             }
 
             else
@@ -61,13 +66,17 @@ namespace QuestionsAndAnswers.Controllers
                 string email = Session["UserSessionEmail"].ToString();
                 int UserID = QuestionsAndAnswers.Models.User.returnUserID(email);
                 string text = Request.Form.Get("Text");
-                int questionID =Convert.ToInt32( Request.Form.Get("QuestionID"));
-                answer.UserID = UserID;
-                answer.text = text;
-                answer.QuestionID = questionID;
-                db.Answers.Add(answer);
-                db.SaveChanges();
-                return PartialView("ViewAnswerUsingAjax", answer);
+                if ( !string.IsNullOrEmpty(text) && !string.IsNullOrWhiteSpace(text))
+                {
+                    int questionID = Convert.ToInt32(Request.Form.Get("QuestionID"));
+                    answer.UserID = UserID;
+                    answer.text = text;
+                    answer.QuestionID = questionID;
+                    db.Answers.Add(answer);
+                    db.SaveChanges();
+                    return PartialView("ViewAnswerUsingAjax", answer);
+                }
+                else { return PartialView("ViewAnswerUsingAjax", answer); }
             }
 
             else
